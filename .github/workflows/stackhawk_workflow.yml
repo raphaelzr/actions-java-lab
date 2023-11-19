@@ -49,3 +49,23 @@ jobs:
           apiKey: ${{ secrets.HAWK_API_KEY }}
           codeScanningAlerts: true
           githubToken: ${{ github.token }}
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: stackhawk
+
+    steps:
+      - name: Set up SSH
+        env:
+          DEPLOY_KEY: ${{ secrets.SENAC_AZURE_VM }}
+        run: |
+          mkdir -p ~/.ssh
+          echo "$DEPLOY_KEY" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan 172.191.64.68 >> ~/.ssh/known_hosts
+
+      - name: Deploy to server
+        env:
+          DEPLOY_KEY: ${{ secrets.SENAC_AZURE_VM }}
+        run: |
+          scp -i ~/.ssh/id_rsa -r staging/* azureadmin@172.191.64.68:/app/data/
