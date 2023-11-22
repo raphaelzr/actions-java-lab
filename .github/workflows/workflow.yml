@@ -69,3 +69,4 @@ jobs:
           DEPLOY_KEY: ${{ secrets.SENAC_AZURE_VM }}
         run: |
           scp -i ~/.ssh/id_rsa -r staging/* azureadmin@172.191.64.68:/app/data/
+          
