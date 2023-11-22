@@ -27,37 +27,37 @@
 #     start your service so that it can be scanned with the "Run HawkScan" step.
 
 
-name: "StackHawk"
+# name: "StackHawk"
 
-on:
-  push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
-  schedule:
-    - cron: '33 19 * * 6'
+# on:
+#   push:
+#     branches: [ "main" ]
+#   pull_request:
+#     branches: [ "main" ]
+#   schedule:
+#     - cron: '33 19 * * 6'
 
-permissions:
-  contents: read
+# permissions:
+#   contents: read
 
-jobs:
-  stackhawk:
-    permissions:
-      contents: read # for actions/checkout to fetch code
-      security-events: write # for stackhawk/hawkscan-action to upload code scanning alert info
-    name: StackHawk
-    runs-on: ubuntu-20.04
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+# jobs:
+#   stackhawk:
+#     permissions:
+#       contents: read # for actions/checkout to fetch code
+#       security-events: write # for stackhawk/hawkscan-action to upload code scanning alert info
+#     name: StackHawk
+#     runs-on: ubuntu-20.04
+#     steps:
+#       - name: Checkout code
+#         uses: actions/checkout@v3
 
-      - name: Start your service
-        run: ./your-service.sh &                  # ✏️ Update this to run your own service to be scanned
+#       - name: Start your service
+#         run: ./your-service.sh &                  # ✏️ Update this to run your own service to be scanned
 
-      - name: Run HawkScan
-        uses: stackhawk/hawkscan-action@4c3258cd62248dac6d9fe91dd8d45928c697dee0
-        continue-on-error: true                   # ✏️ Set to false to break your build on scan errors
-        with:
-          apiKey: ${{ secrets.HAWK_API_KEY }}
-          codeScanningAlerts: true
-          githubToken: ${{ github.token }}
+#       - name: Run HawkScan
+#         uses: stackhawk/hawkscan-action@4c3258cd62248dac6d9fe91dd8d45928c697dee0
+#         continue-on-error: true                   # ✏️ Set to false to break your build on scan errors
+#         with:
+#           apiKey: ${{ secrets.HAWK_API_KEY }}
+#           codeScanningAlerts: true
+#           githubToken: ${{ github.token }}
