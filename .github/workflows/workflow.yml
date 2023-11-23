@@ -59,7 +59,7 @@ jobs:
       - name: Download artifact
         uses: actions/download-artifact@v3
         with:
-          name: java-publish-app-artifact
+          name: Package
 
       - name: Set up SSH
         env:
