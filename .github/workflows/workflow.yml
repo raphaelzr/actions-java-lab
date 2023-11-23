@@ -73,5 +73,5 @@ jobs:
         env:
           DEPLOY_KEY: ${{ secrets.SENAC_AZURE_VM }}
         run: |
-          scp -i ~/.ssh/id_rsa -r ./java-publish-app-artifact/* azureadmin@172.191.45.143:/app/data/
+          scp -i ~/.ssh/id_rsa -r ./* azureadmin@172.191.45.143:/app/data/
           
