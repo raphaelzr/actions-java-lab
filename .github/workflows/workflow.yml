@@ -74,4 +74,10 @@ jobs:
           DEPLOY_KEY: ${{ secrets.SENAC_AZURE_VM }}
         run: |
           scp -i ~/.ssh/id_rsa -r ./* azureadmin@172.191.45.143:/app/data/
+
+      - name: Start Java Application
+        env:
+          DEPLOY_KEY: ${{ secrets.SENAC_AZURE_VM }}
+        run: |
+          ssh -i ~/.ssh/id_rsa azureadmin@172.191.45.143 'nohup java -jar /app/data/seu-arquivo.jar > /dev/null 2>&1 &'
           
