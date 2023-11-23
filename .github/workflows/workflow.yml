@@ -21,6 +21,29 @@ jobs:
           name: Package
           path: staging
 
+  codeql:
+    name: CodeQL Analysis
+    runs-on: ubuntu-latest
+    needs: build
+
+    strategy:
+      matrix:
+        language: ['java']
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v1
+        with:
+          languages: ${{ matrix.language }}
+
+      - name: Analyze code
+        uses: github/codeql-action/analyze@v1
+        with:
+          languages: ${{ matrix.language }}
+          codeql-db-path: codeql-database
 
   stackhawk:
     permissions:
