@@ -79,5 +79,5 @@ jobs:
         env:
           DEPLOY_KEY: ${{ secrets.SENAC_AZURE_VM }}
         run: |
-          ssh -i ~/.ssh/id_rsa azureadmin@172.191.45.143 'nohup java -jar /app/data/seu-arquivo.jar > /dev/null 2>&1 &'
+          ssh -i ~/.ssh/id_rsa azureadmin@172.191.45.143 'nohup java -jar /app/data/actions-java-lab-1.0-SNAPSHOT-jar-with-dependencies.jar > /dev/null 2>&1 &'
           
