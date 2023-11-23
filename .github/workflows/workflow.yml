@@ -26,10 +26,6 @@ jobs:
     runs-on: ubuntu-latest
     needs: build
 
-    strategy:
-      matrix:
-        language: ['java']
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -37,12 +33,12 @@ jobs:
       - name: Initialize CodeQL
         uses: github/codeql-action/init@v1
         with:
-          languages: ${{ matrix.language }}
+          languages: ${{ 'java-kotlin' }}
 
       - name: Analyze code
         uses: github/codeql-action/analyze@v1
         with:
-          languages: ${{ matrix.language }}
+          languages: ${{ 'java-kotlin' }}
           codeql-db-path: codeql-database
 
   stackhawk:
