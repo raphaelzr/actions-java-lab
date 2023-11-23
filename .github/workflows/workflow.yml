@@ -19,7 +19,7 @@ jobs:
       - uses: actions/upload-artifact@v3
         with:
           name: Package
-          path: ./
+          path: staging
 
 
   stackhawk:
@@ -51,10 +51,16 @@ jobs:
           githubToken: ${{ github.token }}
 
   deploy:
+
     runs-on: ubuntu-latest
-    needs: stackhawk
+    needs: build
 
     steps:
+      - name: Download artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: java-publish-app-artifact
+
       - name: Set up SSH
         env:
           DEPLOY_KEY: ${{ secrets.SENAC_AZURE_VM }}
@@ -62,11 +68,10 @@ jobs:
           mkdir -p ~/.ssh
           echo "$DEPLOY_KEY" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
-          ssh-keyscan 172.191.45.143 >> ~/.ssh/known_hosts
-
+          ssh-keyscan 172.191.64.68 >> ~/.ssh/known_hosts
       - name: Deploy to server
         env:
           DEPLOY_KEY: ${{ secrets.SENAC_AZURE_VM }}
         run: |
-          scp -i ~/.ssh/id_rsa -r ./* azureadmin@172.191.45.143:/app/data/
+          scp -i ~/.ssh/id_rsa -r ./java-publish-app-artifact/* azureadmin@172.191.64.68:/app/data/
           
