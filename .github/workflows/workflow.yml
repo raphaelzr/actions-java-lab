@@ -63,7 +63,7 @@ jobs:
           echo "$DEPLOY_KEY" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan 172.191.45.143 >> ~/.ssh/known_hosts
-          scp -i ~/.ssh/id_rsa -r ./staging/ azureadmin@172.191.45.143:/app/data/
+          scp -r ./staging/ azureadmin@172.191.45.143:/app/data/
 
       # - name: Deploy to server
       #   env:
