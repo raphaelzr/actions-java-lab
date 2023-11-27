@@ -22,13 +22,14 @@ jobs:
           path: staging
 
   analyze:
-    name: Analyze
+    name: CodeQL
     # Runner size impacts CodeQL analysis time. To learn more, please see:
     #   - https://gh.io/recommended-hardware-resources-for-running-codeql
     #   - https://gh.io/supported-runners-and-hardware-resources
     #   - https://gh.io/using-larger-runners
     # Consider using larger runners for possible analysis time improvements.
     runs-on: ${{ (matrix.language == 'swift' && 'macos-latest') || 'ubuntu-latest' }}
+    needs: build
     timeout-minutes: ${{ (matrix.language == 'swift' && 120) || 360 }}
     permissions:
       actions: read
@@ -87,7 +88,7 @@ jobs:
       security-events: write # for stackhawk/hawkscan-action to upload code scanning alert info
     name: StackHawk
     runs-on: ubuntu-20.04
-    needs: build  
+    needs: analyze  
 
     steps:
       - name: Checkout code
