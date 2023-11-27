@@ -130,7 +130,7 @@ jobs:
           mkdir -p ~/.ssh
           echo "$DEPLOY_KEY" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
-          ssh-keyscan 172.191.45.143 >> ~/.ssh/known_hosts
+          ssh-keyscan 40.88.146.254 >> ~/.ssh/known_hosts
       - name: Deploy to server
         env:
           DEPLOY_KEY: ${{ secrets.SENAC_AZURE_VM }}
@@ -141,5 +141,5 @@ jobs:
         env:
           DEPLOY_KEY: ${{ secrets.SENAC_AZURE_VM }}
         run: |
-          ssh -i ~/.ssh/id_rsa azureadmin@172.191.45.143 'java -jar /app/data/actions-java-lab-1.0-SNAPSHOT-jar-with-dependencies.jar'
+          ssh -i ~/.ssh/id_rsa azureadmin@40.88.146.254 'java -jar /app/data/actions-java-lab-1.0-SNAPSHOT-jar-with-dependencies.jar'
           
