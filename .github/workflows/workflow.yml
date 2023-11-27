@@ -21,25 +21,40 @@ jobs:
           name: Package
           path: staging
 
-  codeql:
-    name: CodeQL Analysis
-    runs-on: ubuntu-latest
-    needs: build
+  analyze:
+    name: Analyze
+    
+    runs-on: ${{ (matrix.language == 'swift' && 'macos-latest') || 'ubuntu-latest' }}
+    timeout-minutes: ${{ (matrix.language == 'swift' && 120) || 360 }}
+    permissions:
+      actions: read
+      contents: read
+      security-events: write
+
+    strategy:
+      fail-fast: false
+      matrix:
+        language: [ 'java-kotlin' ]
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+    - name: Checkout repository
+      uses: actions/checkout@v3
 
-      - name: Initialize CodeQL
-        uses: github/codeql-action/init@v2
-        with:
-          languages: ${{ 'java-kotlin' }}
+    # Initializes the CodeQL tools for scanning.
+    - name: Initialize CodeQL
+      uses: github/codeql-action/init@v2
+      with:
+        languages: ${{ matrix.language }}
+        
+        queries: security-extended,security-and-quality
 
-      - name: Analyze code
-        uses: github/codeql-action/analyze@v2
-        with:
-          languages: ${{ 'java-kotlin' }}
-          codeql-db-path: codeql-database
+    - name: Autobuild
+      uses: github/codeql-action/autobuild@v2
+
+    - name: Perform CodeQL Analysis
+      uses: github/codeql-action/analyze@v2
+      with:
+        category: "/language:${{matrix.language}}"
 
   stackhawk:
     permissions:
