@@ -22,7 +22,7 @@ public class App {
             // Start the server and wait for 5 minutes
             server.start();
             server.join();
-            Thread.sleep(5 * 60 * 1000); // Sleep for 5 minutes
+            Thread.sleep(1 * 60 * 1000); // Sleep for 5 minutes
             server.stop(); // Stop the server after 5 minutes
         } catch (Exception e) {
             e.printStackTrace();
