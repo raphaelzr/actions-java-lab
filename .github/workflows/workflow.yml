@@ -141,5 +141,6 @@ jobs:
         env:
           DEPLOY_KEY: ${{ secrets.SENAC_AZURE_VM }}
         run: |
-          ssh -i ~/.ssh/id_rsa azureadmin@40.88.146.254 'java -jar /app/data/actions-java-lab-1.0-SNAPSHOT-jar-with-dependencies.jar &'
+          ssh -i ~/.ssh/id_rsa azureadmin@40.88.146.254 'java -jar /app/data/actions-java-lab-1.0-SNAPSHOT-jar-with-dependencies.jar > /dev/null 2>&1 &'
+          #ssh -i ~/.ssh/id_rsa azureadmin@40.88.146.254 'java -jar /app/data/actions-java-lab-1.0-SNAPSHOT-jar-with-dependencies.jar &'
           
